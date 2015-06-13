@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -25,6 +27,29 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+  # Include Factory Girl syntax to simplify calls to factories
+  config.include FactoryGirl::Syntax::Methods
+
+  # Include custom login macros
+  config.include LoginMacros
+
+  # Configure DatabaseCleaner to reset data between tests
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -44,9 +69,4 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-
-  # Include Factory Girl syntax to simplify calls to factories
-  config.include FactoryGirl::Syntax::Methods
-
-  config.include LoginMacros
 end
