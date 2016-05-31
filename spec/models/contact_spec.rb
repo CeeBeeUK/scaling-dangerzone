@@ -10,13 +10,13 @@ describe Contact do
     expect(create(:contact).phones.count). to eq 3
   end
 
-  it 'is invalid without a firstname' do
+  it 'is invalid without a firstname', names: true do
     contact = build(:contact, firstname: nil)
     expect(contact).not_to be_valid
     expect(contact.errors[:firstname]).to include("can't be blank")
   end
 
-  it 'is invalid without a lastname' do
+  it 'is invalid without a lastname', names: true do
     contact = build(:contact, lastname: nil)
     contact.valid?
     expect(contact.errors[:lastname]).to include("can't be blank")
