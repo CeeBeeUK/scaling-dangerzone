@@ -201,6 +201,8 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    shoulda-matchers (3.0.1)
+      activesupport (>= 4.0.0)
     slop (3.6.0)
     spring (1.7.1)
     spring-commands-rspec (1.0.4)
@@ -248,6 +250,7 @@ DEPENDENCIES
   sass-rails (~> 5.0.3)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  shoulda-matchers
   spring
   spring-commands-rspec (~> 1.0.2)
   sqlite3

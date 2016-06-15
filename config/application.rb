@@ -21,6 +21,10 @@ module ContactsRspec3Rails41
     # config.i18n.default_locale = :de
 
     config.generators do |g|
+
+      g.helper false
+      g.javascripts false
+      g.stylesheets false
       g.test_framework :rspec,
         fixtures: true,
         view_specs: false,
